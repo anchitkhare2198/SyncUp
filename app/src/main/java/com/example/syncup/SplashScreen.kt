@@ -16,7 +16,7 @@ class SplashScreen : AppCompatActivity() {
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
-        val typeFace : Typeface = Typeface.createFromAsset(assets,"carbon bl.ttf")
+        val typeFace : Typeface = Typeface.createFromAsset(assets,"Mangabey.ttf")
         binding?.tvAppName?.typeface = typeFace
     }
 }
