@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "567224856007",
+    "project_id": "syncup-996bf",
+    "storage_bucket": "syncup-996bf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:567224856007:android:328502b47237822a23bde2",
+        "android_client_info": {
+          "package_name": "com.example.syncup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "567224856007-bdlu247a6jd4eh7mbjp2golda5ieru1b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcZNHsdIEeTEq95kLmTpgBGpPhLorwRbI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "567224856007-bdlu247a6jd4eh7mbjp2golda5ieru1b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

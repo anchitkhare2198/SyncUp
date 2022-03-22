@@ -10,22 +10,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SyncUp">
         <activity
-            android:name=".SignInActivity"
+            android:name=".activities.SignInActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.SyncUp.NoActionBar" />
         <activity
-            android:name=".SignUpActivity"
+            android:name=".activities.SignUpActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.SyncUp.NoActionBar" />
         <activity
-            android:name=".IntroActivity"
+            android:name=".activities.IntroActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.SyncUp.NoActionBar" />
         <activity
-            android:name=".SplashScreen"
+            android:name=".activities.SplashScreen"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.SyncUp.NoActionBar">
@@ -35,9 +35,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="true" />
     </application>
 
 </manifest>

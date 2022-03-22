@@ -1,23 +1,24 @@
-package com.example.syncup
+package com.example.syncup.activities
 
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.syncup.databinding.ActivitySignInBinding
+import com.example.syncup.databinding.ActivitySignUpBinding
+import com.example.syncup.databinding.ActivitySplashScreenBinding
 
-class SignInActivity : AppCompatActivity() {
+class SignUpActivity : AppCompatActivity() {
 
-    private var binding:ActivitySignInBinding? = null
+    private var binding: ActivitySignUpBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySignInBinding.inflate(layoutInflater)
+        binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
         val typeFace : Typeface = Typeface.createFromAsset(assets,"Mangabey.ttf")
         binding?.tvAppName?.typeface = typeFace
 
-        setSupportActionBar(binding?.toolbarSignInActivity)
+        setSupportActionBar(binding?.toolbarSignUpActivity)
         binding?.backButton?.setOnClickListener {
             onBackPressed()
         }

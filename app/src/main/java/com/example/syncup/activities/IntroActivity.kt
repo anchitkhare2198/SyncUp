@@ -1,4 +1,4 @@
-package com.example.syncup
+package com.example.syncup.activities
 
 import android.content.Intent
 import android.graphics.Typeface
