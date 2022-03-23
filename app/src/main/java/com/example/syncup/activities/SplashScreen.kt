@@ -6,8 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import com.example.syncup.databinding.ActivitySplashScreenBinding
+import com.example.syncup.firebase.FireStoreClass
 
-class SplashScreen : AppCompatActivity() {
+class SplashScreen : BaseActivity() {
 
     private var binding: ActivitySplashScreenBinding? = null
 
@@ -20,8 +21,15 @@ class SplashScreen : AppCompatActivity() {
         binding?.tvAppName?.typeface = typeFace
 
         Handler().postDelayed({
-            startActivity(Intent(this, IntroActivity::class.java))
-            finish()
+
+            var currentUserId = FireStoreClass().getCurrentUserId()
+            if(currentUserId.isNotEmpty()){
+                startActivity(Intent(this, HomepageActivity::class.java))
+                finish()
+            }else{
+                startActivity(Intent(this, IntroActivity::class.java))
+                finish()
+            }
         },2500)
     }
 }
