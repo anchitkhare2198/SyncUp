@@ -36,9 +36,10 @@ class SignInActivity : BaseActivity() {
 
     fun signInSuccess(user: Users){
         hideProgressDialog()
-        startActivity(Intent(this,HomepageActivity::class.java))
+        var intent = Intent(this,HomepageActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
         finish()
-        //Toast.makeText(this, "Working!!", Toast.LENGTH_SHORT).show()
 
     }
 
