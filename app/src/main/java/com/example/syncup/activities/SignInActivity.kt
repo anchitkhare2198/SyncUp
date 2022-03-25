@@ -2,7 +2,6 @@ package com.example.syncup.activities
 
 import android.content.Intent
 import android.graphics.Typeface
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
@@ -15,6 +14,8 @@ import com.google.firebase.auth.FirebaseUser
 class SignInActivity : BaseActivity() {
 
     private var binding: ActivitySignInBinding? = null
+//    private val sharedPrefFile = "sharedPreference"
+//    private var sharedPreferences: SharedPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +24,9 @@ class SignInActivity : BaseActivity() {
 
         val typeFace: Typeface = Typeface.createFromAsset(assets, "Mangabey.ttf")
         binding?.tvAppName?.typeface = typeFace
+
+//        sharedPreferences = this.getSharedPreferences(sharedPrefFile,
+//            Context.MODE_PRIVATE)
 
         setSupportActionBar(binding?.toolbarSignInActivity)
         binding?.backButton?.setOnClickListener {
@@ -54,14 +58,12 @@ class SignInActivity : BaseActivity() {
                     if (task.isSuccessful) {
                         val firebaseUser: FirebaseUser = task.result!!.user!!
                         val registeredEmail = firebaseUser.email!!
-                        FireStoreClass().signInUser(this)
-//                        Toast.makeText(
-//                            this,
-//                            "You have successfully Signed In with $registeredEmail",
-//                            Toast.LENGTH_LONG
-//                        ).show()
-//                        FirebaseAuth.getInstance().signOut()
-//                        finish()
+//                        val editor:SharedPreferences.Editor =  sharedPreferences!!.edit()
+//                        editor.putString("USER", firebaseUser.toString())
+//                        editor.putString("EMAIL",registeredEmail)
+//                        editor.apply()
+//                        editor.commit()
+                        FireStoreClass().baseUserDetails(this)
                     } else {
                         Toast.makeText(
                             this, task.exception!!.message,
