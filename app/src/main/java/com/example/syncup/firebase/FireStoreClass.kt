@@ -3,10 +3,8 @@ package com.example.syncup.firebase
 import android.app.Activity
 import android.util.Log
 import android.widget.Toast
-import com.example.syncup.activities.HomepageActivity
-import com.example.syncup.activities.MyProfileActivity
-import com.example.syncup.activities.SignInActivity
-import com.example.syncup.activities.SignUpActivity
+import com.example.syncup.activities.*
+import com.example.syncup.models.Board
 import com.example.syncup.models.Users
 import com.example.syncup.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
@@ -22,6 +20,21 @@ class FireStoreClass {
             .set(userInfo, SetOptions.merge())
             .addOnSuccessListener {
                 activity.userRegisteredSuccess()
+            }
+    }
+
+    fun createBoard(activity:CreateBoardActivity, board: Board){
+        mFireStore.collection(Constants.BOARDS)
+            .document()
+            .set(board, SetOptions.merge())
+            .addOnSuccessListener {
+                Log.i(activity.javaClass.simpleName,"Board Created Successfully!!")
+                Toast.makeText(activity, "Board Created Successfully!!", Toast.LENGTH_SHORT).show()
+                activity.CreateBoardSuccess()
+            }.addOnFailureListener {
+                exception ->
+                activity.hideProgressDialog()
+                Log.e(activity.javaClass.simpleName,"Error!!",exception)
             }
     }
 

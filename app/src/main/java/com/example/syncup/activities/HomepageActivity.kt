@@ -13,6 +13,7 @@ import com.example.syncup.databinding.ActivityHomepageBinding
 import com.example.syncup.databinding.NavHeaderMainBinding
 import com.example.syncup.firebase.FireStoreClass
 import com.example.syncup.models.Users
+import com.example.syncup.utils.Constants
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 
@@ -24,6 +25,9 @@ class HomepageActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
     companion object{
         const val MY_PROFILE_REQUEST_CODE = 11
     }
+
+    private lateinit var mUserName: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomepageBinding.inflate(layoutInflater)
@@ -33,13 +37,17 @@ class HomepageActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
         binding?.navView?.setNavigationItemSelectedListener(this)
 
         binding?.floatingBtn?.setOnClickListener {
-            startActivity(Intent(this,CreateBoardActivity::class.java))
+            val i = Intent(this,CreateBoardActivity::class.java)
+            i.putExtra(Constants.NAME,mUserName)
+            startActivity(i)
+
         }
 
         FireStoreClass().baseUserDetails(this)
     }
 
     fun updateNavigationUserDetails(user: Users){
+        mUserName = user.name
         val headerView: View = binding?.navView!!.getHeaderView(0)
         headBinding = NavHeaderMainBinding.bind(headerView)
         Glide
