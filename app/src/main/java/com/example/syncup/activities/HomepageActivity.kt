@@ -7,11 +7,15 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.core.view.GravityCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.syncup.R
+import com.example.syncup.adapters.BoardItemAdapter
 import com.example.syncup.databinding.ActivityHomepageBinding
+import com.example.syncup.databinding.ContentMainBinding
 import com.example.syncup.databinding.NavHeaderMainBinding
 import com.example.syncup.firebase.FireStoreClass
+import com.example.syncup.models.Board
 import com.example.syncup.models.Users
 import com.example.syncup.utils.Constants
 import com.google.android.material.navigation.NavigationView
@@ -24,6 +28,7 @@ class HomepageActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
 
     companion object{
         const val MY_PROFILE_REQUEST_CODE = 11
+        const val BOARD_REQUEST_CODE = 12
     }
 
     private lateinit var mUserName: String
@@ -36,17 +41,34 @@ class HomepageActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
         setupActionBar()
         binding?.navView?.setNavigationItemSelectedListener(this)
 
-        binding?.floatingBtn?.setOnClickListener {
+        binding?.includedRv?.floatingBtn?.setOnClickListener {
             val i = Intent(this,CreateBoardActivity::class.java)
             i.putExtra(Constants.NAME,mUserName)
-            startActivity(i)
+            startActivityForResult(i, BOARD_REQUEST_CODE)
 
         }
 
-        FireStoreClass().baseUserDetails(this)
+        FireStoreClass().baseUserDetails(this, true)
     }
 
-    fun updateNavigationUserDetails(user: Users){
+    fun showBoardList(boardList: ArrayList<Board>){
+        hideProgressDialog()
+        if(boardList.size>0){
+            binding!!.includedRv.rvBoardsList.visibility = View.VISIBLE
+            binding!!.includedRv.tvNoBoardsAvailable.visibility = View.GONE
+
+            binding!!.includedRv.rvBoardsList.layoutManager = LinearLayoutManager(this)
+            binding!!.includedRv.rvBoardsList.setHasFixedSize(true)
+
+            val adapter = BoardItemAdapter(this,boardList)
+            binding!!.includedRv.rvBoardsList.adapter = adapter
+        }else{
+            binding!!.includedRv.rvBoardsList.visibility = View.GONE
+            binding!!.includedRv.tvNoBoardsAvailable.visibility = View.VISIBLE
+        }
+    }
+
+    fun updateNavigationUserDetails(user: Users, readBoardsList: Boolean){
         mUserName = user.name
         val headerView: View = binding?.navView!!.getHeaderView(0)
         headBinding = NavHeaderMainBinding.bind(headerView)
@@ -57,12 +79,17 @@ class HomepageActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
             .placeholder(R.drawable.ic_user_place_holder)
             .into(headBinding?.navUserImage!!)
         headBinding?.tvUsername?.text = user.name
+
+        if(readBoardsList){
+            showDialog("Please Wait!!")
+            FireStoreClass().getBoardsList(this)
+        }
     }
 
     private fun setupActionBar(){
-        setSupportActionBar(binding?.toolbarHomepage)
-        binding?.toolbarHomepage?.setNavigationIcon(R.drawable.ic_action_navigation_menu)
-        binding?.toolbarHomepage?.setNavigationOnClickListener {
+        setSupportActionBar(binding?.includedRv?.toolbarHomepage)
+        binding?.includedRv?.toolbarHomepage?.setNavigationIcon(R.drawable.ic_action_navigation_menu)
+        binding?.includedRv?.toolbarHomepage?.setNavigationOnClickListener {
             toggleDrawer()
         }
     }
@@ -87,6 +114,9 @@ class HomepageActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_OK && requestCode == MY_PROFILE_REQUEST_CODE){
             FireStoreClass().baseUserDetails(this)
+        }
+        else if(resultCode == Activity.RESULT_OK && requestCode == BOARD_REQUEST_CODE){
+            FireStoreClass().baseUserDetails(this, true)
         }else{
             Log.e("Cancelled","Cancelled")
         }
